@@ -40,12 +40,12 @@ test('serverGenerator', (t) => {
     legacy: false,
   };
 
-  t.snapshot(serverGenerator('Test', functions, options));
+  t.snapshot(serverGenerator('Test', null, functions, options));
   const legacyOptions = {
     moduleFormat: 'cjs',
     legacy: true,
   };
-  t.snapshot(serverGenerator('LegacyTest', functions, legacyOptions));
+  t.snapshot(serverGenerator('LegacyTest', 'BaseServer', functions, legacyOptions));
 });
 
 test('clientGenerator', (t) => {
@@ -88,12 +88,12 @@ test('clientGenerator', (t) => {
     legacy: false,
   };
 
-  t.snapshot(clientGenerator('Test', functions, options));
+  t.snapshot(clientGenerator('Test', null, functions, options));
   const legacyOptions = {
     moduleFormat: 'cjs',
     legacy: true,
   };
-  t.snapshot(clientGenerator('LegacyTest', functions, legacyOptions));
+  t.snapshot(clientGenerator('LegacyTest', 'BaseClient', functions, legacyOptions));
 });
 
 test('resultGenerator', (t) => {
