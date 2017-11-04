@@ -2,7 +2,7 @@ let {{serviceName}}$TypeCache = null;
 {{#if legacy}}
 const {{serviceName}}$handler = Symbol('handler');
 {{/if}}
-{{#if useESM}}export {{/if}}class {{serviceName}}Server extends Server {
+{{#if useESM}}export {{/if}}class {{serviceName}}Server extends {{extendServiceName}} {
   constructor({{#if legacy}}handler{{/if}}) {
     super({{legacy}});
     {{#if legacy}}

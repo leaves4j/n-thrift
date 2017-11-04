@@ -1,4 +1,4 @@
-{{#if useESM}}export {{/if}}class {{serviceName}}Client extends Client {
+{{#if useESM}}export {{/if}}class {{serviceName}}Client extends {{extendServiceName}} {
   {{#each functions}}
 
   {{name}}({{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}}) {
