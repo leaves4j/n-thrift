@@ -1,6 +1,6 @@
 const test = require('ava');
 const {
-  getFieldTypeString,
+  getFieldTypeString, isBaseType, isContainerType,
 } = require('../../../lib/generator/helpers');
 
 test('getFieldTypeString', (t) => {
@@ -33,3 +33,27 @@ test('getFieldTypeString', (t) => {
   const result = '{ name: \'list\', type: { name: \'map\', keyType: { name: \'set\', type: \'i32\' }, valueType: { name: \'map\', keyType: \'i32\', valueType: { name: \'set\', type: { name: \'list\', type: { name: \'map\', keyType: Insanity, valueType: \'string\' } } } } } }';
   t.is(str, result);
 });
+
+test('isBaseType', (t) => {
+  t.true(isBaseType('void'));
+  t.true(isBaseType('byte'));
+  t.true(isBaseType('i8'));
+  t.true(isBaseType('i16'));
+  t.true(isBaseType('i32'));
+  t.true(isBaseType('i64'));
+  t.true(isBaseType('bool'));
+  t.true(isBaseType('string'));
+  t.true(isBaseType('binary'));
+  t.true(isBaseType('double'));
+  t.false(isBaseType('map'));
+  t.false(isBaseType('Struct'));
+});
+
+test('isContainerType', (t) => {
+  t.true(isContainerType('map'));
+  t.true(isContainerType('set'));
+  t.true(isContainerType('list'));
+  t.false(isContainerType('string'));
+  t.false(isContainerType('Struct'));
+});
+
