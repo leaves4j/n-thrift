@@ -1,0 +1,61 @@
+let {{structName}}$TypeCache = null;
+{{#each fields}} 
+const {{../structName}}${{name}} = Symbol('{{name}}');
+{{/each}}
+{{#if useESM}}export {{/if}}class {{structName}} extends Struct {
+  constructor(args) {
+    super();
+
+    {{#each fields}}
+    this[{{../structName}}${{name}}] = {{#if defaultValue}}{{defaultValue}}{{else}}null{{/if}};
+    {{/each}}
+
+    if (args) {
+      {{#each fields}}
+      this.{{customName}} = args.{{customName}};
+      {{/each}}  
+    }
+  }
+
+  static get Types() {
+    if({{structName}}$TypeCache) return {{structName}}$TypeCache;
+    {{structName}}$TypeCache = new Map();
+    {{#each fields}}
+     {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
+    {{/each}}
+    return {{structName}}$TypeCache;
+  }
+  {{#each fields}}
+
+  get {{customName}}() { return this[{{../structName}}${{name}}]; }
+  set {{customName}}(val) {
+    if(val !== undefined) {
+    {{#if (isString type)}}
+      {{#if (isBaseType type)}}
+      this[{{../structName}}${{name}}] = val;
+      {{else}}
+      if(val instanceof {{type}}) {
+        this[{{../structName}}${{name}}] = val;
+      } else {
+        this[{{../structName}}${{name}}] = new {{type}}(val);
+      }
+      {{/if}}
+    {{/if}}
+    {{#if (isObject type)}}
+      {{#if (eq type.type "map")}}
+      this[{{../structName}}${{name}}] = new TMap(val, {{{type.keyTypeStr}}}, {{{type.valueTypeStr}}});
+      {{/if}}
+      {{#if (eq type.type "set")}}
+      this[{{../structName}}${{name}}] = new TSet(val, {{{type.typeStr}}});
+      {{/if}}
+      {{#if (eq type.type "list")}}
+      this[{{../structName}}${{name}}] = new TList(val, {{{type.typeStr}}});
+      {{/if}}
+    {{/if}}
+    }
+  }
+  {{/each}} 
+}
+{{#unless useESM}} 
+exports.{{structName}} = {{structName}};
+{{/unless}}

@@ -1,0 +1,88 @@
+let {{structName}}$TypeCache = null;
+{{#if (unlessEq functionType "void")}}
+const {{structName}}$success = Symbol('success');
+{{/if}}
+{{#each throws}} 
+const {{../structName}}${{name}} = Symbol('{{name}}');
+{{/each}}
+{{#if useESM}}export {{/if}}class {{structName}} extends Struct {
+  constructor(argument) {
+    super();
+
+    {{#if (unlessEq functionType "void")}}
+    this[{{structName}}$success] = null;
+    {{/if}}
+    {{#each throws}}
+    this[{{../structName}}${{name}}] = null;
+    {{/each}}
+
+    if (argument) {
+      {{#each throws}}
+      if(argument instanceof {{type}}) {
+        this.{{name}} = argument;
+        return;
+      }
+      {{/each}} 
+      {{#if (unlessEq functionType "void")}}
+      this.success = argument; 
+      {{/if}}
+    }
+  }
+
+  static get Types() {
+    if({{structName}}$TypeCache) return {{structName}}$TypeCache;
+    {{structName}}$TypeCache = new Map();
+    {{#if (unlessEq functionType "void")}}
+    {{structName}}$TypeCache.set(0, { name: 'success', customName: 'success', type: {{{functionTypeStr}}} });
+    {{/if}}
+    {{#each throws}}
+    {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{name}}', type: {{{typeStr}}} });
+    {{/each}}
+    return {{structName}}$TypeCache;
+  }
+  {{#if (unlessEq functionType "void")}}
+
+  get success() { return this[{{structName}}$success]; }
+  set success(val) {
+    if(val !== undefined) {
+    {{#if (isString functionType)}}
+      {{#if (isBaseType functionType)}}
+      this[{{../structName}}$success] = val;
+      {{else}}
+      if(val instanceof {{functionType}}) {
+        this[{{../structName}}$success] = val;
+      } else {
+        this[{{../structName}}$success] = new {{functionType}}(val);
+      }
+      {{/if}}
+    {{/if}}
+    {{#if (isObject functionType)}}
+      {{#if (eq functionType.type "map")}}
+      this[{{../structName}}$success] = new TMap(val, {{{functionType.keyTypeStr}}}, {{{functionType.valueTypeStr}}});
+      {{/if}}
+      {{#if (eq functionType.type "set")}}
+      this[{{../structName}}$success] = new TSet(val, {{{functionType.typeStr}}});
+      {{/if}}
+      {{#if (eq functionType.type "list")}}
+      this[{{../structName}}$success] = new TList(val, {{{functionType.typeStr}}});
+      {{/if}}
+    {{/if}}
+  }
+  {{/if}}
+  {{#each throws}}
+
+  get {{name}}() { return this[{{../structName}}${{name}}]; }
+  set {{name}}(val) {
+    if(val !== undefined) {
+      if(val instanceof {{type}}) {
+        this[{{structName}}${{name}}] = val;
+      } else {
+        this[{{structName}}${{name}}] = new {{type}}(val);
+      }
+    }
+  }
+  {{/each}} 
+}
+{{#unless useESM}} 
+exports.{{structName}} = {{structName}};
+{{/unless}}
