@@ -164,5 +164,22 @@ test('resultGenerator', (t) => {
     legacy: false,
   };
   t.snapshot(resultGenerator('MyTest', voidFunc, voidOptions));
+
+  const funcContainer = {
+    functionType: {
+      type: 'set',
+      fieldType: 'string',
+    },
+    name: 'testMultiException',
+    oneway: false,
+    args: [],
+    throws: [
+    ],
+  };
+  const optionsContainer = {
+    moduleFormat: 'cjs',
+    legacy: false,
+  };
+  t.snapshot(resultGenerator('MyTest', funcContainer, optionsContainer));
 });
 
