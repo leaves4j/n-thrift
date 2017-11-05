@@ -1,8 +1,6 @@
 const test = require('ava');
 const _ = require('lodash');
-const {
-  structGenerator,
-} = require('../../../lib/generator/struct');
+const structGenerator = require('../../../lib/generator/struct');
 
 test('structGenerator', (t) => {
   const fields = [
@@ -11,41 +9,41 @@ test('structGenerator', (t) => {
       option: null,
       fieldType: {
         type: 'list',
-        fieldType: 'Bonk',
+        fieldType: 'Bonk'
       },
       identifier: 'bonks',
-      defaultValue: null,
+      defaultValue: null
     },
     {
       id: '2',
       option: null,
       fieldType: 'Bonk',
       identifier: 'bonk',
-      defaultValue: null,
+      defaultValue: null
     },
     {
       id: '3',
       option: null,
       fieldType: 'i8',
       identifier: 'newbyte',
-      defaultValue: null,
+      defaultValue: null
     },
     {
       id: '4',
       option: null,
       fieldType: 'i16',
       identifier: 'newshort',
-      defaultValue: 123,
+      defaultValue: 123
     },
     {
       id: '5',
       option: null,
       fieldType: {
         type: 'set',
-        fieldType: 'Bonk',
+        fieldType: 'Bonk'
       },
       identifier: 'my_set',
-      defaultValue: null,
+      defaultValue: null
     },
     {
       id: '6',
@@ -55,29 +53,29 @@ test('structGenerator', (t) => {
         keyFieldType: 'i32',
         valueFieldType: {
           type: 'list',
-          fieldType: 'Numbers',
-        },
+          fieldType: 'Numbers'
+        }
       },
       identifier: 'types',
-      defaultValue: null,
+      defaultValue: null
     }];
 
   const options = {
     moduleFormat: 'esm',
-    fieldFormatter: _.camelCase,
+    fieldFormatter: _.camelCase
   };
 
-  const esmStr = structGenerator('TestStruct', fields, options);
+  const esmStr = structGenerator('TestStruct', 'Struct', fields, options);
   t.snapshot(esmStr);
   const cjsOptions = {
     moduleFormat: 'cjs',
-    fieldFormatter: _.toUpper,
+    fieldFormatter: _.toUpper
   };
 
-  const cjsStr = structGenerator('TestStruct', fields, cjsOptions);
+  const cjsStr = structGenerator('TestStruct', 'Struct', fields, cjsOptions);
   t.snapshot(cjsStr);
 
-  const defaultStr = structGenerator('TestStruct', fields);
+  const defaultStr = structGenerator('TestStruct', 'Struct', fields);
   t.snapshot(defaultStr);
 });
 
