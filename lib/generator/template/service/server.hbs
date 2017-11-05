@@ -1,27 +1,14 @@
-let {{serviceName}}$TypeCache = null;
+
 {{#if legacy}}
 const {{serviceName}}$handler = Symbol('handler');
 {{/if}}
+
 {{#if useESM}}export {{/if}}class {{serviceName}}Server extends {{extendServiceName}} {
   constructor({{#if legacy}}handler{{/if}}) {
     super({{legacy}});
     {{#if legacy}}
     this[{{../serviceName}}$handler] = handler || {};
     {{/if}}
-  }
-
-  static get Types() {
-    if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
-    {{serviceName}}$TypeCache = new Map();
-    {{#each functions}}
-    {{../serviceName}}$TypeCache.set('{{name}}', {
-      customName: {{name}},
-      argumentType: {{../serviceName}}${{name}}$Args,
-      resultType: {{../serviceName}}${{name}}$Result,
-      oneway: {{oneway}}
-    });
-    {{/each}}
-    return {{serviceName}}$TypeCache;
   }
   {{#each functions}}
 
@@ -41,6 +28,20 @@ const {{serviceName}}$handler = Symbol('handler');
     {{/unless}}
   }
   {{/each}}
+
+  static get Types() {
+    if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
+    {{serviceName}}$TypeCache = new Map();
+    {{#each functions}}
+    {{../serviceName}}$TypeCache.set('{{name}}', {
+      customName: {{name}},
+      argumentType: {{../serviceName}}${{name}}$Args,
+      resultType: {{../serviceName}}${{name}}$Result,
+      oneway: {{oneway}}
+    });
+    {{/each}}
+    return {{serviceName}}$TypeCache;
+  }
 }
 {{#unless useESM}}exports.{{serviceName}}Server = {{serviceName}}Server{{/unless}}
 {{#if legacy}}

@@ -1,28 +1,29 @@
+
+let {{serviceName}}$TypeCache = null;
+
 {{#if useESM}}export {{/if}}class {{serviceName}}Client extends {{extendServiceName}} {
   {{#each functions}}
 
   {{name}}({{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}}) {
-    const args = new {{../serviceName}}${{name}}$Args({ {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}} });
-    return this.send('{{name}}', args).then(input => {
-      const result = new {{../serviceName}}${{name}}$Result();
-      result.read(input);
-      input.readMessageEnd();
-      {{#if (unlessEq functionType "void")}}
-      if (result.success !== null) {
-        return result.success;
-      }
-      return Promise.reject(new Error('"{{../serviceName}}.{{name}}" request failed: unknown result'));
-      {{/if}}
-    }).catch(input => {
-      const error = new Thrift.TApplicationException();
-      error.read(input);
-      input.readMessageEnd();
-      return Promise.reject(error);
-    });
+    const args = { {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}} };
+    return this.send('{{name}}', args)
   }
   {{/each}}
-}
 
+  static get Types() {
+    if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
+    {{serviceName}}$TypeCache = new Map();
+    {{#each functions}}
+    {{../serviceName}}$TypeCache.set('{{name}}', {
+      customName: {{name}},
+      argumentType: {{../serviceName}}${{name}}$Args,
+      resultType: {{../serviceName}}${{name}}$Result,
+      oneway: {{oneway}}
+    });
+    {{/each}}
+    return {{serviceName}}$TypeCache;
+  }
+}
 {{#unless useESM}}exports.{{serviceName}}Client = {{serviceName}}Client{{/unless}}
 {{#if legacy}}
   {{#if useESM}} 

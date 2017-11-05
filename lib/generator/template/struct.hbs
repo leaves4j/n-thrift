@@ -1,29 +1,20 @@
+
 let {{structName}}$TypeCache = null;
 {{#each fields}} 
 const {{../structName}}${{name}} = Symbol('{{name}}');
 {{/each}}
-{{#if useESM}}export {{/if}}class {{structName}} extends Struct {
+
+{{#if useESM}}export {{/if}}class {{structName}} extends {{extendStructName}} {
   constructor(args) {
     super();
-
     {{#each fields}}
     this[{{../structName}}${{name}}] = {{#if defaultValue}}{{defaultValue}}{{else}}null{{/if}};
     {{/each}}
-
     if (args) {
       {{#each fields}}
       this.{{customName}} = args.{{customName}};
       {{/each}}  
     }
-  }
-
-  static get Types() {
-    if({{structName}}$TypeCache) return {{structName}}$TypeCache;
-    {{structName}}$TypeCache = new Map();
-    {{#each fields}}
-     {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
-    {{/each}}
-    return {{structName}}$TypeCache;
   }
   {{#each fields}}
 
@@ -54,7 +45,16 @@ const {{../structName}}${{name}} = Symbol('{{name}}');
     {{/if}}
     }
   }
-  {{/each}} 
+  {{/each}}
+
+  static get Types() {
+    if({{structName}}$TypeCache) return {{structName}}$TypeCache;
+    {{structName}}$TypeCache = new Map();
+    {{#each fields}}
+     {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
+    {{/each}}
+    return {{structName}}$TypeCache;
+  } 
 }
 {{#unless useESM}} 
 exports.{{structName}} = {{structName}};
