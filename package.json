@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc ava",
+    "test": "nyc ava && rm -rf coverage && rm -rf .nyc_output",
     "test-update": "ava --update-snapshots"
   },
   "author": "",
