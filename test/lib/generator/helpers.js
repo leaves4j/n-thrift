@@ -1,6 +1,6 @@
 const test = require('ava');
 const {
-  getFieldTypeString, isBaseType, isContainerType,
+  getFieldTypeString, isBaseType, isContainerType
 } = require('../../../lib/generator/helpers');
 
 test('getFieldTypeString', (t) => {
@@ -10,7 +10,7 @@ test('getFieldTypeString', (t) => {
       type: 'map',
       keyFieldType: {
         type: 'set',
-        fieldType: 'i32',
+        fieldType: 'i32'
       },
       valueFieldType: {
         type: 'map',
@@ -22,15 +22,15 @@ test('getFieldTypeString', (t) => {
             fieldType: {
               type: 'map',
               keyFieldType: 'Insanity',
-              valueFieldType: 'string',
-            },
-          },
-        },
-      },
-    },
+              valueFieldType: 'string'
+            }
+          }
+        }
+      }
+    }
   };
   const str = getFieldTypeString(fieldType);
-  const result = '{ name: \'list\', type: { name: \'map\', keyType: { name: \'set\', type: \'i32\' }, valueType: { name: \'map\', keyType: \'i32\', valueType: { name: \'set\', type: { name: \'list\', type: { name: \'map\', keyType: Insanity, valueType: \'string\' } } } } } }';
+  const result = '{ type: TList, keyType: { type: TMap, keyType: { type: TSet, keyType: \'i32\' }, valueType: { type: TMap, keyType: \'i32\', valueType: { type: TSet, keyType: { type: TList, keyType: { type: TMap, keyType: Insanity, valueType: \'string\' } } } } } }';
   t.is(str, result);
 });
 
