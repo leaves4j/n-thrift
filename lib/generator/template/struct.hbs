@@ -6,6 +6,7 @@ const {{../structName}}${{name}} = Symbol('{{name}}');
 
 {{#if useESM}}export {{/if}}class {{structName}} extends {{extendStructName}} {
   constructor(args) {
+    {{#if isException}}this.name = {{structName}};{{/if}}
     super();
     {{#each fields}}
     this[{{../structName}}${{name}}] = {{#if defaultValue}}{{defaultValue}}{{else}}null{{/if}};
