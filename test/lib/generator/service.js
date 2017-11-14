@@ -97,90 +97,47 @@ test('clientGenerator', (t) => {
 });
 
 test('resultGenerator', (t) => {
-  const func = {
-    functionType: {
-      type: 'map',
-      keyFieldType: 'i32',
-      valueFieldType: {
-        type: 'list',
-        fieldType: 'Numbers'
-      }
-    },
-    name: 'testMultiException',
-    oneway: false,
-    args: [],
-    throws: [
-      {
-        id: '1',
-        type: 'Xception',
-        name: 'err1'
-      },
-      {
-        id: '2',
-        type: 'Xception2',
-        name: 'err2'
-      },
-      {
-        id: '3',
-        type: 'Xception2',
-        name: 'err2'
-      }
-    ]
-  };
   const options = {
     moduleFormat: 'esm',
+    fieldFormatter: _.camelCase,
     legacy: false
   };
-  t.snapshot(resultGenerator('MyTest', func, options));
-
-  const funcNoThrows = {
-    functionType: 'string',
-    name: 'testMultiException',
-    oneway: false,
-    args: [],
-    throws: [
-    ]
-  };
-  const optionsNoThrows = {
-    moduleFormat: 'cjs',
-    legacy: false
-  };
-  t.snapshot(resultGenerator('MyTest', funcNoThrows, optionsNoThrows));
-  const voidFunc = {
-    functionType: 'void',
-    name: 'testMultiException',
-    oneway: false,
-    args: [],
-    throws: [
-      {
-        id: '1',
-        type: 'Xception',
-        name: 'err1'
-      }
-    ]
-  };
-  const voidOptions = {
-    moduleFormat: 'cjs',
-    legacy: false
-  };
-  t.snapshot(resultGenerator('MyTest', voidFunc, voidOptions));
-
-  const funcContainer = {
-    functionType: {
-      type: 'set',
-      fieldType: 'string'
+  const functionsAST = [
+    {
+      type: 'function',
+      functionType: 'void',
+      identifier: 'blahBlah',
+      oneway: null,
+      args: [],
+      throws: []
     },
-    name: 'testMultiException',
-    oneway: false,
-    args: [],
-    throws: [
-    ]
-  };
-  const optionsContainer = {
-    moduleFormat: 'cjs',
-    legacy: false
-  };
-  t.snapshot(resultGenerator('MyTest', funcContainer, optionsContainer));
+    {
+      type: 'function',
+      functionType: 'string',
+      identifier: 'secondtestString',
+      oneway: null,
+      args: [
+        {
+          id: '1',
+          option: null,
+          fieldType: 'string',
+          identifier: 'my_thing',
+          defaultValue: null
+        }
+      ],
+      throws: [
+        {
+          id: '1',
+          option: null,
+          fieldType: 'Xception',
+          identifier: 'err1',
+          defaultValue: null
+        }
+      ]
+    }
+  ];
+
+  t.snapshot(resultGenerator('Test', 'Base', functionsAST, options));
 });
 
 test('serviceGenerator', (t) => {
