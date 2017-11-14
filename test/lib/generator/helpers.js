@@ -30,7 +30,7 @@ test('getFieldTypeString', (t) => {
     }
   };
   const str = getFieldTypeString(fieldType);
-  const result = '{ type: TList, valueType: { type: TMap, keyType: { type: TSet, valueType: \'i32\' }, valueType: { type: TMap, keyType: \'i32\', valueType: { type: TSet, valueType: { type: TList, valueType: { type: TMap, keyType: Insanity, valueType: \'string\' } } } } } }';
+  const result = '{ name: \'list\', typeClass: TList, valueType: { name: \'map\', typeClass: TMap, keyType: { name: \'set\', typeClass: TSet, valueType: { name: \'i32\', typeClass: null } }, valueType: { name: \'map\', typeClass: TMap, keyType: { name: \'i32\', typeClass: null }, valueType: { name: \'set\', typeClass: TSet, valueType: { name: \'list\', typeClass: TList, valueType: { name: \'map\', typeClass: TMap, keyType: { name: \'struct\', typeClass: Insanity }, valueType: { name: \'string\', typeClass: null } } } } } } }';
   t.is(str, result);
 });
 
