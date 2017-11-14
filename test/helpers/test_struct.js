@@ -1,5 +1,5 @@
 const TStruct = require('../../lib/thrift/class/t_struct');
-const { getTypeValueSymbol: getTypeValue } = require('../../lib/thrift/utils');
+const { convertToTypedValue } = require('../../lib/thrift/utils');
 
 let TestStruct$TypeCache = null;
 const TestStruct$name = Symbol('name');
@@ -20,14 +20,12 @@ class TestStruct extends TStruct {
 
   get name() { return this[TestStruct$name]; }
   set name(val) {
-    this[TestStruct$name] = this[getTypeValue](val, { name: 'string', typeClass: null }, 'name');
+    this[TestStruct$name] = this[convertToTypedValue](val, { name: 'string', typeClass: null }, 'name');
   }
 
-  get age() {
-    return this[TestStruct$age];
-  }
+  get age() { return this[TestStruct$age]; }
   set age(val) {
-    this[TestStruct$age] = this[getTypeValue](val, { name: 'i32', typeClass: null }, 'age');
+    this[TestStruct$age] = this[convertToTypedValue](val, { name: 'i32', typeClass: null }, 'age');
   }
 
 
