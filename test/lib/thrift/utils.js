@@ -21,7 +21,7 @@ test('getThriftType', (t) => {
   t.is(getThriftType({ name: 'struct' }), ThriftType.STRUCT);
 });
 test('isSameThriftType', (t) => {
-  t.true(isSameThriftType({ name: 'bool' }), ThriftType.BOOL));
+  t.true(isSameThriftType(ThriftType.BOOL, { name: 'bool' }));
 });
 
 test('getTypeValue with struct', (t) => {
