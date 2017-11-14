@@ -12,7 +12,7 @@ let {{serviceName}}$TypeCache = null;
 
   static get Types() {
     if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
-    {{serviceName}}$TypeCache = new Map();
+    {{serviceName}}$TypeCache = new Map(super.constructor.Type);
     {{#each functions}}
     {{../serviceName}}$TypeCache.set('{{name}}', {
       customName: {{name}},
