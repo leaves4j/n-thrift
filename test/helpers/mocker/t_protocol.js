@@ -34,6 +34,9 @@ class TProtocol {
     this.data.push({ flag: 'FieldEnd' });
   }
   writeFieldStop() {
+    this.data.push({
+      flag: 'FieldBegin', ftype: 0
+    });
   }
   writeMapBegin(ktype, vtype, size) {
     this.data.push({
@@ -83,78 +86,78 @@ class TProtocol {
     const {
       fname, ftype, rseqid, flag
     } = this.data[this.cursor];
-    if (flag !== 'MessageBegin') throw new Error('except MessageBegin');
+    if (flag !== 'MessageBegin') throw new Error(`except MessageBegin, but got ${flag}`);
     this.cursor++;
     return { fname, ftype, rseqid };
   }
   readMessageEnd() {
     const { flag } = this.data[this.cursor];
-    if (flag !== 'MessageEnd') throw new Error('except MessageEnd');
+    if (flag !== 'MessageEnd') throw new Error(`except MessageEnd, but got ${flag}`);
     this.cursor++;
   }
   readStructBegin() {
     const {
       fname, flag
     } = this.data[this.cursor];
-    if (flag !== 'StructBegin') throw new Error('except StructBegin');
+    if (flag !== 'StructBegin') throw new Error(`except StructBegin, but got ${flag}`);
     this.cursor++;
     return { fname };
   }
   readStructEnd() {
     const { flag } = this.data[this.cursor];
-    if (flag !== 'StructEnd') throw new Error('except StructEnd');
+    if (flag !== 'StructEnd') throw new Error(`except StructEnd, but got ${flag}`);
     this.cursor++;
   }
   readFieldBegin() {
     const {
       fname, ftype, fid, flag
     } = this.data[this.cursor];
-    if (flag !== 'FieldBegin') throw new Error('except FieldBegin');
+    if (flag !== 'FieldBegin') throw new Error(`except FieldBegin, but got ${flag}`);
     this.cursor++;
     return { fname, ftype, fid };
   }
   readFieldEnd() {
     const { flag } = this.data[this.cursor];
-    if (flag !== 'FieldEnd') throw new Error('except FieldEnd');
+    if (flag !== 'FieldEnd') throw new Error(`except FieldEnd, but got ${flag}`);
     this.cursor++;
   }
   readMapBegin() {
     const {
       ktype, vtype, size, flag
     } = this.data[this.cursor];
-    if (flag !== 'MapBegin') throw new Error('except MapBegin');
+    if (flag !== 'MapBegin') throw new Error(`except MapBegin, but got ${flag}`);
     this.cursor++;
     return { ktype, vtype, size };
   }
   readMapEnd() {
     const { flag } = this.data[this.cursor];
-    if (flag !== 'MapEnd') throw new Error('except MapEnd');
+    if (flag !== 'MapEnd') throw new Error(`except MapEnd, but got ${flag}`);
     this.cursor++;
   }
   readListBegin() {
     const {
       etype, size, flag
     } = this.data[this.cursor];
-    if (flag !== 'ListBegin') throw new Error('except ListBegin');
+    if (flag !== 'ListBegin') throw new Error(`except ListBegin, but got ${flag}`);
     this.cursor++;
     return { etype, size };
   }
   readListEnd() {
     const { flag } = this.data[this.cursor];
-    if (flag !== 'ListEnd') throw new Error('except ListEnd');
+    if (flag !== 'ListEnd') throw new Error(`except ListEnd, but got ${flag}`);
     this.cursor++;
   }
   readSetBegin() {
     const {
       etype, size, flag
     } = this.data[this.cursor];
-    if (flag !== 'SetBegin') throw new Error('except SetBegin');
+    if (flag !== 'SetBegin') throw new Error(`except SetBegin, but got ${flag}`);
     this.cursor++;
     return { etype, size };
   }
   readSetEnd() {
     const { flag } = this.data[this.cursor];
-    if (flag !== 'SetEnd') throw new Error('except SetEnd');
+    if (flag !== 'SetEnd') throw new Error(`except SetEnd, but got ${flag}`);
     this.cursor++;
   }
   readBool() {

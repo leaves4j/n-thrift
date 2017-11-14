@@ -40,10 +40,6 @@ test('writeFiledValue', (t) => {
   const buffer = Buffer.from('hello word');
   writeFiledValue(buffer, ThriftType.STRING, 'binary', protocol);
   t.deepEqual(protocol.data, [buffer]);
-
-  protocol.data = [];
-  writeFiledValue(123, ThriftType.I32, 'i32', protocol);
-  t.deepEqual(protocol.data, [123]);
 });
 
 test('writeStruct', (t) => {
@@ -52,12 +48,12 @@ test('writeStruct', (t) => {
   fieldMap.set(1, { name: 'bonks', customName: 'BONKS', type: { name: 'list', typeClass: TList, valueType: { name: 'i32', typeClass: null } } });
   fieldMap.set(2, { name: 'bonk', customName: 'BONK', type: { name: 'string', typeClass: null } });
   fieldMap.set(4, { name: 'newshort', customName: 'NEWSHORT', type: { name: 'i16', typeClass: null } });
-  fieldMap.set(5, { name: 'my_set', customName: 'MY_SET', type: { name: 'set', type: TSet, valueType: { name: 'string' } } });
+  fieldMap.set(5, { name: 'my_set', customName: 'MY_SET', type: { name: 'set', typeClass: TSet, valueType: { name: 'string' } } });
   fieldMap.set(6, {
     name: 'my_map',
     customName: 'MY_MAP',
     type: {
-      name: 'map', type: TMap, keyType: { name: 'i32' }, valueType: { name: 'string' }
+      name: 'map', typeClass: TMap, keyType: { name: 'i32' }, valueType: { name: 'string' }
     }
   });
 
@@ -110,6 +106,10 @@ test('writeStruct', (t) => {
     'c',
     { flag: 'MapEnd' },
     { flag: 'FieldEnd' },
+    {
+      flag: 'FieldBegin', ftype: ThriftType.STOP
+    },
     { flag: 'StructEnd' }];
+
   t.deepEqual(protocol.data, result);
 });
