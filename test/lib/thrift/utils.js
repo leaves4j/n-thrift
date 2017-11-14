@@ -19,6 +19,7 @@ test('getThriftType', (t) => {
   t.is(getThriftType({ name: 'list' }), ThriftType.LIST);
   t.is(getThriftType({ name: 'set' }), ThriftType.SET);
   t.is(getThriftType({ name: 'struct' }), ThriftType.STRUCT);
+  t.is(getThriftType({ name: 'union' }), ThriftType.STRUCT);
 });
 test('isSameThriftType', (t) => {
   t.true(isSameThriftType(ThriftType.BOOL, { name: 'bool' }));
