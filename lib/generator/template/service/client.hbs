@@ -6,7 +6,7 @@ let {{serviceName}}$TypeCache = null;
 
   {{name}}({{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}}) {
     const args = { {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}} };
-    return this[send]('{{name}}', args)
+    return this[{{../sendKey}}]('{{name}}', args)
   }
   {{/each}}
 

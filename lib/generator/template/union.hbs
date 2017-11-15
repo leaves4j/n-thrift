@@ -22,7 +22,7 @@ const {{structName}}$FieldValue = Symbol('fieldValue');
   }
   set {{customName}}(val) {
     this[{{../structName}}$FieldName] = '{{customName}}';
-    this[{{../structName}}$FieldValue] = this[getTypeValue](val, {{{typeStr}}}, '{{customName}}');
+    this[{{../structName}}$FieldValue] = this[{{../typeConvertKey}}](val, {{{typeStr}}}, '{{customName}}');
   }
   {{/each}}
 

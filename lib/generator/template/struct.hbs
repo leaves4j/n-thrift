@@ -20,7 +20,7 @@ const {{../structName}}${{customName}} = Symbol('{{customName}}');
 
   get {{customName}}() { return this[{{../structName}}${{customName}}]; }
   set {{customName}}(val) { 
-    this[{{../structName}}${{customName}}] = this[getTypeValue](val, {{{typeStr}}}, '{{customName}}');
+    this[{{../structName}}${{customName}}] = this[{{../typeConvertKey}}](val, {{{typeStr}}}, '{{customName}}');
   }
   {{/each}}
 
