@@ -26,7 +26,7 @@ const {{structName}}$FieldValue = Symbol('fieldValue');
   }
   {{/each}}
 
-  static get Types() {
+  static get Type() {
     if({{structName}}$TypeCache) return {{structName}}$TypeCache;
     {{structName}}$TypeCache = new Map();
     {{#each fields}}

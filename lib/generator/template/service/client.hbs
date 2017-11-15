@@ -10,7 +10,7 @@ let {{serviceName}}$TypeCache = null;
   }
   {{/each}}
 
-  static get Types() {
+  static get Type() {
     if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
     {{serviceName}}$TypeCache = new Map(super.constructor.Type);
     {{#each functions}}

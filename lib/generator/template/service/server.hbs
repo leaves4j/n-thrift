@@ -29,7 +29,7 @@ const {{serviceName}}$handler = Symbol('handler');
   }
   {{/each}}
 
-  static get Types() {
+  static get Type() {
     if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
     {{serviceName}}$TypeCache = new Map();
     {{#each functions}}
