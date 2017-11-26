@@ -36,16 +36,14 @@ test('serverGenerator', (t) => {
     }];
 
   const options = {
-    moduleFormat: 'esm',
-    legacy: false
+    moduleFormat: 'esm'
   };
 
   t.snapshot(serverGenerator('Test', null, functions, options));
-  const legacyOptions = {
-    moduleFormat: 'cjs',
-    legacy: true
+  const cjsOptions = {
+    moduleFormat: 'cjs'
   };
-  t.snapshot(serverGenerator('LegacyTest', 'Base', functions, legacyOptions));
+  t.snapshot(serverGenerator('Test', 'Base', functions, cjsOptions));
 });
 
 test('clientGenerator', (t) => {
@@ -99,8 +97,7 @@ test('clientGenerator', (t) => {
 test('resultGenerator', (t) => {
   const options = {
     moduleFormat: 'esm',
-    fieldFormatter: _.camelCase,
-    legacy: false
+    fieldFormatter: _.camelCase
   };
   const functionsAST = [
     {

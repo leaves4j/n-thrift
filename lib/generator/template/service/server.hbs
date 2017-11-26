@@ -1,31 +1,20 @@
 
-{{#if legacy}}
 const {{serviceName}}$handler = Symbol('handler');
-{{/if}}
 
 {{#if useESM}}export {{/if}}class {{serviceName}}Server extends {{extendServiceName}} {
-  constructor({{#if legacy}}handler{{/if}}) {
-    super({{legacy}});
-    {{#if legacy}}
-    this[{{../serviceName}}$handler] = handler || {};
-    {{/if}}
+  constructor(handler) {
+    super();
+    if(handler) {
+      this[{{serviceName}}$handler] = handler;
+    }
   }
   {{#each functions}}
 
   {{name}}({{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}}) {
-    {{#unless ../legacy}}
-    throw new Error('"{{../serviceName}}.{{name}}" is not implemented');
-    {{else}}
-    if (typeof this[{{../serviceName}}$handler].{{name}} !== 'function') {
+    if (this[{{../serviceName}}$handler] && typeof this[{{../serviceName}}$handler].{{name}} !== 'function') {
       throw new Error('"{{../serviceName}}.{{name}}" is not implemented');
     }
-    return new Promise((resolve, reject) => {
-      this[{{../serviceName}}$handler].{{name}}({{#forEach args}}{{customName}}, {{/forEach}}(error, result) => {
-        if (error) return reject(error);
-        return resolve(result);
-      });
-    });
-    {{/unless}}
+    return this[{{../serviceName}}$handler].{{name}}.call(this[{{../serviceName}}$handler], {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}});
   }
   {{/each}}
 
@@ -44,10 +33,3 @@ const {{serviceName}}$handler = Symbol('handler');
   }
 }
 {{#unless useESM}}exports.{{serviceName}}Server = {{serviceName}}Server{{/unless}}
-{{#if legacy}}
-  {{#if useESM}} 
-export const Processor = {{serviceName}}Server;
-  {{else}}
-exports.Processor = {{serviceName}}Server;
-  {{/if}}
-{{/if}}
