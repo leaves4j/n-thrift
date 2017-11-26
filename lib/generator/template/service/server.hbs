@@ -4,14 +4,14 @@ const {{serviceName}}$handler = Symbol('handler');
 {{#if useESM}}export {{/if}}class {{serviceName}}Server extends {{extendServiceName}} {
   constructor(handler) {
     super();
-    if(handler) {
+    if(handler && typeof handler === 'object') {
       this[{{serviceName}}$handler] = handler;
     }
   }
   {{#each functions}}
 
   {{name}}({{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}}) {
-    if (this[{{../serviceName}}$handler] && typeof this[{{../serviceName}}$handler].{{name}} !== 'function') {
+    if (this[{{../serviceName}}$handler] === undefined || typeof this[{{../serviceName}}$handler].{{name}} !== 'function') {
       throw new Error('"{{../serviceName}}.{{name}}" is not implemented');
     }
     return this[{{../serviceName}}$handler].{{name}}.call(this[{{../serviceName}}$handler], {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}});
