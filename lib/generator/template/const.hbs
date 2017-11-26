@@ -1,0 +1,4 @@
+
+{{#if useESM}}export {{/if}}const {{constName}} = {{{constValue}}};
+Object.freeze({{constName}});
+{{#unless useESM}}exports.{{constName}} = {{constName}}{{/unless}}
