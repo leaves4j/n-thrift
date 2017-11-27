@@ -5,7 +5,10 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "nyc ava && rm -rf coverage && rm -rf .nyc_output",
-    "test-update": "ava --update-snapshots"
+    "test-update": "ava --update-snapshots",
+    "preversion": "npm test",
+    "version": "git add -A",
+    "postversion": "git push && git push --tags"
   },
   "bin": {
     "node-thrift": "bin/node-thrift.js"
