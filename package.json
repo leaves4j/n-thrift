@@ -10,7 +10,21 @@
   "bin": {
     "node-thrift": "bin/node-thrift.js"
   },
-  "author": "",
+  "files": [
+    "lib",
+    "bin"
+  ],
+  "keywords": [
+    "thrift",
+    "node-thrift",
+    "compiler",
+    "thrift-compiler"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leaves4j/n-thrift.git"
+  },
+  "author": "jiangq.leaves@gmail.com",
   "license": "MIT",
   "dependencies": {
     "common-bin": "^2.7.1",
