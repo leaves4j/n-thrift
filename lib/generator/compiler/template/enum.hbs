@@ -1,8 +1,8 @@
 
 {{#if useESM}}export {{/if}}const {{enumName}} = {
   {{#forEach enumFields}}
-  {{name}}{{#isnt value null}} = {{value}}{{/isnt}}{{#unless isLast}},{{/unless}}
+  {{name}}{{#isnt value null}}: {{value}}{{/isnt}}{{#unless isLast}},{{/unless}}
   {{/forEach}}
 };
 Object.freeze({{enumName}});
-{{#unless useESM}}exports.{{enumName}} = {{enumName}}{{/unless}}
+{{#unless useESM}}exports.{{enumName}} = {{enumName}}{{/unless}};

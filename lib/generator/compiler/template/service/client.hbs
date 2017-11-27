@@ -3,19 +3,18 @@ let {{serviceName}}$TypeCache = null;
 
 {{#if useESM}}export {{/if}}class {{serviceName}}Client extends {{extendServiceName}} {
   {{#each functions}}
-
   {{name}}({{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}}) {
     const args = { {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}} };
-    return this[{{../sendKey}}]('{{name}}', args)
+    return this[{{../sendKey}}]('{{name}}', args);
   }
-  {{/each}}
 
+  {{/each}}
   static get Type() {
-    if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
+    if ({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
     {{serviceName}}$TypeCache = new Map(super.constructor.Type);
     {{#each functions}}
     {{../serviceName}}$TypeCache.set('{{name}}', {
-      customName: {{name}},
+      customName: '{{name}}',
       argumentType: {{../serviceName}}${{name}}$Args,
       resultType: {{../serviceName}}${{name}}$Result,
       oneway: {{oneway}}
@@ -24,11 +23,4 @@ let {{serviceName}}$TypeCache = null;
     return {{serviceName}}$TypeCache;
   }
 }
-{{#unless useESM}}exports.{{serviceName}}Client = {{serviceName}}Client{{/unless}}
-{{#if legacy}}
-  {{#if useESM}} 
-export const Client = {{serviceName}}Client;
-  {{else}}
-exports.Client = {{serviceName}}Client;
-  {{/if}}
-{{/if}}
+{{#unless useESM}}exports.{{serviceName}}Client = {{serviceName}}Client{{/unless}};

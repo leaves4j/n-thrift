@@ -7,12 +7,17 @@
     "test": "nyc ava && rm -rf coverage && rm -rf .nyc_output",
     "test-update": "ava --update-snapshots"
   },
+  "bin": {
+    "node-thrift": "bin/node-thrift.js"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "common-bin": "^2.7.1",
     "filehound": "^1.16.2",
     "handlebars": "^4.0.11",
     "handlebars-helpers": "^0.9.8",
+    "mkdirp-promise": "^5.0.1",
     "node-thrift-parser": "^0.1.3",
     "thrift": "^0.10.0"
   },

@@ -4,7 +4,7 @@ const {{serviceName}}$handler = Symbol('handler');
 {{#if useESM}}export {{/if}}class {{serviceName}}Server extends {{extendServiceName}} {
   constructor(handler) {
     super();
-    if(handler && typeof handler === 'object') {
+    if (handler && typeof handler === 'object') {
       this[{{serviceName}}$handler] = handler;
     }
   }
@@ -19,11 +19,11 @@ const {{serviceName}}$handler = Symbol('handler');
   {{/each}}
 
   static get Type() {
-    if({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
+    if ({{serviceName}}$TypeCache) return {{serviceName}}$TypeCache;
     {{serviceName}}$TypeCache = new Map();
     {{#each functions}}
     {{../serviceName}}$TypeCache.set('{{name}}', {
-      customName: {{name}},
+      customName: '{{name}}',
       argumentType: {{../serviceName}}${{name}}$Args,
       resultType: {{../serviceName}}${{name}}$Result,
       oneway: {{oneway}}
@@ -32,4 +32,4 @@ const {{serviceName}}$handler = Symbol('handler');
     return {{serviceName}}$TypeCache;
   }
 }
-{{#unless useESM}}exports.{{serviceName}}Server = {{serviceName}}Server{{/unless}}
+{{#unless useESM}}exports.{{serviceName}}Server = {{serviceName}}Server{{/unless}};

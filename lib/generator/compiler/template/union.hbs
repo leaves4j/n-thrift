@@ -17,7 +17,7 @@ const {{structName}}$FieldValue = Symbol('fieldValue');
   {{#each fields}}
 
   get {{customName}}() {
-    if(this[{{../structName}}$FieldName] !== '{{customName}}') return null;
+    if (this[{{../structName}}$FieldName] !== '{{customName}}') return null;
     return this[{{../structName}}$FieldValue];
   }
   set {{customName}}(val) {
@@ -27,13 +27,13 @@ const {{structName}}$FieldValue = Symbol('fieldValue');
   {{/each}}
 
   static get Type() {
-    if({{structName}}$TypeCache) return {{structName}}$TypeCache;
+    if ({{structName}}$TypeCache) return {{structName}}$TypeCache;
     {{structName}}$TypeCache = new Map();
     {{#each fields}}
-     {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
+    {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
     {{/each}}
     return {{structName}}$TypeCache;
-  } 
+  }
 }
 {{#unless useESM}} 
 exports.{{structName}} = {{structName}};

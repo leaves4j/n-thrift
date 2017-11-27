@@ -1,4 +1,4 @@
-# Snapshot report for `test/lib/generator/const.js`
+# Snapshot report for `test/lib/generator/compiler/const.js`
 
 The actual snapshot is saved in `const.js.snap`.
 

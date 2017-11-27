@@ -8,7 +8,7 @@ const {{../structName}}${{customName}} = Symbol('{{customName}}');
   constructor(args) {
     super();
     {{#each fields}}
-    this[{{../structName}}${{customName}}] = {{#if defaultValue}}{{defaultValue}}{{else}}null{{/if}};
+    this[{{../structName}}${{customName}}] = {{#if defaultValue}}{{{defaultValue}}}{{else}}null{{/if}};
     {{/each}}
     if (args) {
       {{#each fields}}
@@ -19,19 +19,19 @@ const {{../structName}}${{customName}} = Symbol('{{customName}}');
   {{#each fields}}
 
   get {{customName}}() { return this[{{../structName}}${{customName}}]; }
-  set {{customName}}(val) { 
+  set {{customName}}(val) {
     this[{{../structName}}${{customName}}] = this[{{../typeConvertKey}}](val, {{{typeStr}}}, '{{customName}}');
   }
   {{/each}}
 
   static get Type() {
-    if({{structName}}$TypeCache) return {{structName}}$TypeCache;
+    if ({{structName}}$TypeCache) return {{structName}}$TypeCache;
     {{structName}}$TypeCache = new Map();
     {{#each fields}}
-     {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
+    {{../structName}}$TypeCache.set({{id}}, { name: '{{name}}', customName: '{{customName}}', type: {{{typeStr}}} });
     {{/each}}
     return {{structName}}$TypeCache;
-  } 
+  }
 }
 {{#unless useESM}} 
 exports.{{structName}} = {{structName}};

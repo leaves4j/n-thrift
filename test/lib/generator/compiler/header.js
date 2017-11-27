@@ -15,7 +15,7 @@ test('enumGenerator', (t) => {
     }
   ];
 
-  t.snapshot(headerGenerator(dependencies, 'n-thrift', '1.0.0'));
-  t.snapshot(headerGenerator(dependencies, 'n-thrift', '1.0.0', { moduleFormat: 'esm' }));
+  t.snapshot(headerGenerator(dependencies, { packageName: 'n-thrift', packageVersion: '1.0.0' }));
+  t.snapshot(headerGenerator(dependencies, { packageName: 'n-thrift', packageVersion: '1.0.0', moduleFormat: 'esm' }));
 });
 
