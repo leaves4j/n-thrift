@@ -1,7 +1,7 @@
 const test = require('ava');
 const _ = require('lodash');
-const serviceGenerator = require('../../../lib/generator/service');
-const { serverGenerator, clientGenerator, resultGenerator } = require('../../../lib/generator/service');
+const serviceGenerator = require('../../../../lib/generator/compiler/service');
+const { serverGenerator, clientGenerator, resultGenerator } = require('../../../../lib/generator/compiler/service');
 
 test('serverGenerator', (t) => {
   const functions = [

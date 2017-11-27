@@ -1,7 +1,7 @@
 const test = require('ava');
 const {
   getFieldTypeString, isBaseType, isContainerType
-} = require('../../../lib/generator/helpers');
+} = require('../../../../lib/generator/compiler/helpers');
 
 test('getFieldTypeString', (t) => {
   const fieldType = {

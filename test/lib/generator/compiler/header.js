@@ -1,5 +1,5 @@
 const test = require('ava');
-const headerGenerator = require('../../../lib/generator/header');
+const headerGenerator = require('../../../../lib/generator/compiler/header');
 
 test('enumGenerator', (t) => {
   const dependencies = [

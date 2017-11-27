@@ -1,8 +1,8 @@
 const test = require('ava');
 const _ = require('lodash');
-const structGenerator = require('../../../lib/generator/struct');
+const unionGenerator = require('../../../../lib/generator/compiler/union');
 
-test('structGenerator', (t) => {
+test('unionGenerator', (t) => {
   const fields = [
     {
       id: '1',
@@ -65,17 +65,17 @@ test('structGenerator', (t) => {
     fieldFormatter: _.camelCase
   };
 
-  const esmStr = structGenerator('TestStruct', 'Struct', fields, options);
+  const esmStr = unionGenerator('TestUnion', 'Struct', fields, options);
   t.snapshot(esmStr);
   const cjsOptions = {
     moduleFormat: 'cjs',
     fieldFormatter: _.toUpper
   };
 
-  const cjsStr = structGenerator('TestStruct', 'Struct', fields, cjsOptions);
+  const cjsStr = unionGenerator('TestUnion', 'Struct', fields, cjsOptions);
   t.snapshot(cjsStr);
 
-  const defaultStr = structGenerator('TestStruct', 'Struct', fields);
+  const defaultStr = unionGenerator('TestUnion', 'Struct', fields);
   t.snapshot(defaultStr);
 });
 

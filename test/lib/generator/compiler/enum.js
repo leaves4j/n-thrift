@@ -1,5 +1,5 @@
 const test = require('ava');
-const enumGenerator = require('../../../lib/generator/enum');
+const enumGenerator = require('../../../../lib/generator/compiler/enum');
 
 test('enumGenerator', (t) => {
   const ast = [

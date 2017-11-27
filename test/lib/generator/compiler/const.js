@@ -1,7 +1,7 @@
 
 const test = require('ava');
 const _ = require('lodash');
-const constGenerator = require('../../../lib/generator/const');
+const constGenerator = require('../../../../lib/generator/compiler/const');
 
 test('enumGenerator', (t) => {
   const constMap = {
