@@ -4,7 +4,7 @@ let {{structName}}$TypeCache = null;
 const {{../structName}}${{customName}} = Symbol('{{customName}}');
 {{/each}}
 
-{{#if useESM}}export {{/if}}class {{structName}} extends {{extendStructName}} {
+{{#if useESM}}{{#unless scoped}}export {{/unless}}{{/if}}class {{structName}} extends {{extendStructName}} {
   constructor(args) {
     super();
     {{#each fields}}
@@ -34,5 +34,7 @@ const {{../structName}}${{customName}} = Symbol('{{customName}}');
   }
 }
 {{#unless useESM}} 
+{{#unless scoped}}
 exports.{{structName}} = {{structName}};
+{{/unless}}
 {{/unless}}

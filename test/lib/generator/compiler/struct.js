@@ -65,17 +65,17 @@ test('structGenerator', (t) => {
     fieldFormatter: _.camelCase
   };
 
-  const esmStr = structGenerator('TestStruct', 'Struct', fields, options);
+  const esmStr = structGenerator('TestStruct', 'Struct', fields, false, options);
   t.snapshot(esmStr);
   const cjsOptions = {
     moduleFormat: 'cjs',
     fieldFormatter: _.toUpper
   };
 
-  const cjsStr = structGenerator('TestStruct', 'Struct', fields, cjsOptions);
+  const cjsStr = structGenerator('TestStruct', 'Struct', fields, false, cjsOptions);
   t.snapshot(cjsStr);
 
-  const defaultStr = structGenerator('TestStruct', 'Struct', fields);
+  const defaultStr = structGenerator('TestStruct', 'Struct', fields, false);
   t.snapshot(defaultStr);
 });
 
