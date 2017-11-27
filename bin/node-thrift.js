@@ -5,4 +5,4 @@
 
 const Command = require('../lib/command');
 
-new Command().start();
+(new Command()).start();

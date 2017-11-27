@@ -2,7 +2,7 @@
   "name": "n-thrift",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "nyc ava && rm -rf coverage && rm -rf .nyc_output",
     "test-update": "ava --update-snapshots"
