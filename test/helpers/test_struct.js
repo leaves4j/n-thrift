@@ -9,6 +9,7 @@ const TestStruct$age = Symbol('age');
 class TestStruct extends TStruct {
   constructor(args) {
     super();
+
     this[TestStruct$name] = null;
     this[TestStruct$age] = null;
 
@@ -20,6 +21,7 @@ class TestStruct extends TStruct {
 
   get name() { return this[TestStruct$name]; }
   set name(val) {
+    console.log('asfsfd');
     this[TestStruct$name] = this[convertToTypedValue](val, { name: 'string', typeClass: null }, 'name');
   }
 

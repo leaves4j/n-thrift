@@ -161,7 +161,7 @@ test('readStruct', (t) => {
   t.is(context.MY_MAP.get(1), 'a');
   t.is(context.MY_MAP.get(2), 'b');
   t.is(context.MY_MAP.get(3), 'c');
-  t.is(context.MY_INFO.name, 'book');
   t.is(context.MY_INFO.age, 18);
+  t.is(context.MY_INFO.name, 'book');
 });
 
