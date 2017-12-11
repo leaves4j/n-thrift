@@ -5,7 +5,11 @@
  */
 {{#if useESM}}
 {{#each dependencies}}
-export * as {{this}} from './{{this}}';
+import * as ${{this}} from './{{this}}';
+{{/each}}
+
+{{#each dependencies}}
+export { ${{this}} as {{this}} };
 {{/each}}
 {{else}}
 {{#each dependencies}}
