@@ -14,7 +14,7 @@ const {{serviceName}}$handler = Symbol('handler');
     if (this[{{../serviceName}}$handler] === undefined || typeof this[{{../serviceName}}$handler].{{name}} !== 'function') {
       throw new Error('"{{../serviceName}}.{{name}}" is not implemented');
     }
-    return this[{{../serviceName}}$handler].{{name}}.call(this[{{../serviceName}}$handler], {{#forEach args}}{{customName}}{{#unless isLast}}, {{/unless}}{{/forEach}});
+    return this[{{../serviceName}}$handler].{{name}}.call(this[{{../serviceName}}$handler]{{#forEach args}}, {{customName}}{{/forEach}});
   }
   {{/each}}
 
